@@ -1,22 +1,24 @@
 const express = require("express");
-const mongoose = require("mongoose");
-const urlroute = require("./routes/url");
+const Connentdb = require("./config/db.js");
+const authRoutes = require("./routes/authRoutes.js");
+const doctorRoutes = require("./routes/doctorRoutes.js");
 const app = express();
-const port = 4000;
+const port = 8000;
 const cors = require("cors");
+const dotenv = require("dotenv");
+dotenv.config();
+
 app.use(cors());
 
-mongoose
-  .connect("mongodb://localhost:27017/users")
-  .then(() => console.log("Connected to MongoDB"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+Connentdb();
 
 app.use(express.json());
 
-app.use("/url", urlroute);
+app.use("/", authRoutes);
+app.use("/", doctorRoutes);
 
 app.get("/", (req, res) => {
-  res.send("📌 URL Shortener API is running");
+  res.send("App is running");
 });
 
 app.listen(port, () => {
