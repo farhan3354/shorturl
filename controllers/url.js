@@ -1,5 +1,5 @@
-const Url = require("../models/url");
-const shortid = require("short-id");
+import Url from "../models/url";
+import shortid from "short-id";
 
 async function handleshorturl(req, res) {
   const body = req.body;
@@ -23,8 +23,7 @@ async function handleshorturl(req, res) {
 }
 
 async function handleRedirect(req, res) {
- 
-    const shortId = req.params.shortId;
+  const shortId = req.params.shortId;
 
   const entry = await Url.findOneAndUpdate(
     { shortId },
@@ -32,7 +31,7 @@ async function handleRedirect(req, res) {
       $push: {
         visiturl: { timestamp: Date.now() },
       },
-    }
+    },
   );
 
   if (!entry) {
@@ -57,8 +56,4 @@ async function handleanali(req, res) {
   });
 }
 
-module.exports = {
-  handleshorturl,
-  handleanali,
-  handleRedirect,
-};
+export { handleshorturl, handleanali, handleRedirect };

@@ -1,8 +1,8 @@
-const User = require("../models/userModel.js");
-const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
+import User from "../models/userModel.js";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 
-const registerUser = async (req, res) => {
+export const registerUser = async (req, res) => {
   try {
     const { firstname, lastname, city, email, phone, langua, password, role } =
       req.body;
@@ -47,7 +47,7 @@ const registerUser = async (req, res) => {
   }
 };
 
-const loginUser = async (req, res) => {
+export const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
@@ -66,7 +66,7 @@ const loginUser = async (req, res) => {
     const token = jwt.sign(
       { id: user._id, role: user.role },
       process.env.JWT_SECRET,
-      { expiresIn: "1d" }
+      { expiresIn: "1d" },
     );
 
     return res
@@ -77,7 +77,7 @@ const loginUser = async (req, res) => {
   }
 };
 
-const getUser = async (req, res) => {
+export const getUser = async (req, res) => {
   try {
     const user = await User.find();
     if (!user || user.length === 0) {
@@ -90,5 +90,3 @@ const getUser = async (req, res) => {
     return res.status(500).json("Server Errro");
   }
 };
-
-module.exports = { registerUser, loginUser, getUser };

@@ -1,6 +1,6 @@
-const jwt = require("jsonwebtoken");
+import jwt from "jsonwebtoken";
 
-const authMiddleware = async (req, res, next) => {
+export const authMiddleware = async (req, res, next) => {
   let token;
   if (!token) {
     return res.status(401).json({ message: "Not authorized, no token" });
@@ -19,5 +19,3 @@ const authMiddleware = async (req, res, next) => {
     }
   }
 };
-
-module.exports = { authMiddleware };

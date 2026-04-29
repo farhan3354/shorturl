@@ -1,6 +1,6 @@
-const Doctor = require("../models/doctorProfile.js");
+import Doctor from "../models/doctorProfile.js";
 
-const createDoctor = async (req, res) => {
+export const createDoctor = async (req, res) => {
   try {
     const {
       specialization,
@@ -59,7 +59,7 @@ const createDoctor = async (req, res) => {
   }
 };
 
-const getDoctors = async (req, res) => {
+export const getDoctors = async (req, res) => {
   try {
     const doctors = await Doctor.find();
     return res.status(200).json({ success: true, doctors });
@@ -68,7 +68,7 @@ const getDoctors = async (req, res) => {
   }
 };
 
-const getDoctorById = async (req, res) => {
+export const getDoctorById = async (req, res) => {
   try {
     const { id } = req.user.id;
     const doctor = await Doctor.findById(id);
@@ -81,7 +81,7 @@ const getDoctorById = async (req, res) => {
   }
 };
 
-const updateDoctor = async (req, res) => {
+export const updateDoctor = async (req, res) => {
   try {
     const { id } = req.user.id;
 
@@ -96,5 +96,3 @@ const updateDoctor = async (req, res) => {
     res.status(400).json({ message: "Error updating doctor", error });
   }
 };
-
-module.exports = { createDoctor, getDoctors, getDoctorById };
